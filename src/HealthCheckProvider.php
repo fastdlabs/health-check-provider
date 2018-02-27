@@ -21,11 +21,14 @@ class HealthCheckProvider implements ServiceProviderInterface
      */
     public function register(Container $container)
     {
-        route()->get('/health-check', function () {
+        $response = function () {
             return json([
                 'version' => version(),
                 'app' => app()->getName(),
             ]);
-        });
+        };
+
+        route()->get('/health-check', $response);
+        route()->head('/health-check', $response);
     }
 }
